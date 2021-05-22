@@ -9,7 +9,6 @@ const editor = document.querySelector('main');
 
 editor.addEventListener('input', (e) => {
   const pos = $('main').caret('pos');
-  console.log(pos);
 
   const regex = /(?<!<button contenteditable="false">)(\[[x ]\])(?!<\/button>)/g;
   const str = editor.innerHTML;
@@ -20,6 +19,12 @@ editor.addEventListener('input', (e) => {
     $('main').caret('pos', pos + 1);
   }
 });
+
+editor.addEventListener('mousedown', (e) => {
+  if (e.target.nodeName === 'BUTTON') {
+    e.preventDefault();
+  }
+})
 
 editor.addEventListener('click', (e) => {
   if (e.target.nodeName === 'BUTTON') {
