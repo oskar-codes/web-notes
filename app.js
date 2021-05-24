@@ -24,6 +24,25 @@ editor.addEventListener('mousedown', (e) => {
   if (e.target.nodeName === 'BUTTON') {
     e.preventDefault();
   }
+});
+
+editor.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab') { // tab key
+    e.preventDefault();  // this will prevent us from tabbing out of the editor
+
+    // now insert four non-breaking spaces for the tab key
+    const doc = editor.ownerDocument.defaultView;
+    const sel = doc.getSelection();
+    const range = sel.getRangeAt(0);
+
+    const tabNode = document.createTextNode("\u00a0".repeat(4));
+    range.insertNode(tabNode);
+
+    range.setStartAfter(tabNode);
+    range.setEndAfter(tabNode); 
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
 })
 
 editor.addEventListener('click', (e) => {
